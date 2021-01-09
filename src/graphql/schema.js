@@ -1,9 +1,18 @@
-import { buildSchema } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLSchema } from 'graphql';
+import reviewType from './reviewType';
+import Review from '../models/review';
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
+const RootQuery = new GraphQLObjectType({
+  name: 'RootQueryType',
+  fields: {
+    review: {
+      type: reviewType,
+      args: { id: { type: GraphQLString }},
+      resolve(parent, args) {
+        return Review.findById(args.id)
+      }
+    }
   }
-`);
+})
 
-export default schema;
+export default new GraphQLSchema({ query: RootQuery });
