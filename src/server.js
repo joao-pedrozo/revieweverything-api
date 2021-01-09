@@ -1,8 +1,8 @@
-const Koa = require('koa');
-const mount = require('koa-mount');
-const graphqlHTTP = require('koa-graphql');
-const schema = require('./graphql/schema');
-const initDB = require('./database');
+import Koa from 'koa';
+import mount from 'koa-mount';
+import graphqlHTTP from 'koa-graphql';
+import schema from './graphql/schema';
+import initDB from './database';
 
 
 const app = new Koa();

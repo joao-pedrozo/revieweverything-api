@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start server.js",
+    "dev:server" : "nodemon --exec babel-node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,9 @@
     "mongoose": "^5.11.10",
     "pm2": "^4.5.1"
   },
-  "scripts" : {
-    "start": "pm2 start server.js"
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "nodemon": "^2.0.7"
   }
 }
