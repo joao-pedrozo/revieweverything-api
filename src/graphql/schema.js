@@ -1,6 +1,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLSchema } from 'graphql';
 import reviewType from './reviewType';
 import Review from '../models/review';
+import Mutations from './mutations';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -15,4 +16,4 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
-export default new GraphQLSchema({ query: RootQuery });
+export default new GraphQLSchema({ query: RootQuery, mutation: Mutations});
