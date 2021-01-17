@@ -1,4 +1,5 @@
 import { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLList } from 'graphql';
+import mongoose from 'mongoose';
 import ReviewGraphQLType from './types/review';
 import Review from '../models/review';
 import Mutations from './mutations';
@@ -10,7 +11,12 @@ const RootQuery = new GraphQLObjectType({
       type: ReviewGraphQLType,
       args: { id: { type: GraphQLString }},
       resolve(parent, args) {
-        return Review.findById(args.id)
+        const reviews = Review.aggregate([{
+           $match : { _id : mongoose.Types.ObjectId(args.id)  } }, { 
+           $lookup: { from: 'users', localField: 'by_user', foreignField: '_id', as: 'user'  } 
+          }
+        ]
+      ).then(res => { return res }).catch(err => console.log(err))
       }
     },
     reviews: {
@@ -24,7 +30,8 @@ const RootQuery = new GraphQLObjectType({
             as: 'user'
           }
         }
-      ]).then(res => console.log(res))
+      ]);
+      return reviews;
       }
     }
   }
