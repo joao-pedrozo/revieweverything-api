@@ -11,25 +11,24 @@ const RootQuery = new GraphQLObjectType({
       type: ReviewGraphQLType,
       args: { id: { type: GraphQLString }},
        async resolve(parent, args) {
-        const teste = await Review.aggregate([{
+        const [{ _id, title, text, overall, url, created_at, by_user, user }] = await Review.aggregate([{
            $match : { _id : mongoose.Types.ObjectId(args.id) } }, { 
            $lookup: { from: 'users', localField: 'by_user', foreignField: '_id', as: 'user'  } 
           }
         ]
       )
-      const teste2 = {
-        _id: teste[0].id,
-        title: teste[0].title,
-        text: teste[0].text,
-        overall: teste[0].overall,
-        url: teste[0].url,
-        created_at: teste[0].created_at,
-        by_user: teste[0].by_user,
-        user: teste[0].user[0] 
+      const review = {
+        _id,
+        title,
+        text,
+        overall,
+        url,
+        created_at,
+        by_user,
+        user: user[0],
       }
 
-      console.log(teste[0]);
-      return teste2;
+      return review;
       }
     },
     reviews: {
