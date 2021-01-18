@@ -1,10 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
 
 const ReviewType = new GraphQLObjectType({
-    name: 'Review',
+    name: 'User',
     fields: () => ({
         _id: { type: GraphQLString },
-        nome: { type: GraphQLString }
+        name: { type: GraphQLString },
     })
 });
 
